@@ -4,9 +4,15 @@ import { TokenType } from './token'
 
 export class Interpreter {
   ast: Node
+  fiscalYear: any
+  year: number
+  month: number
 
-  constructor(ast: Node) {
+  constructor(ast: Node, fiscalYear: any, year?: number, month?: number) {
     this.ast = ast
+    this.fiscalYear = fiscalYear
+    this.year = year
+    this.month = month
   }
 
   interpret() {
@@ -15,7 +21,7 @@ export class Interpreter {
 
   eval(node: Node) {
     if (node instanceof DataNode) {
-      return data[node.source][node.key]
+      return data[node.source][node.key][node.period]
     } else if (node instanceof ConstantNode) {
       return node.token.value
     } else if (node instanceof BinOpNode) {

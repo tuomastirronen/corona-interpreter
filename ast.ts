@@ -6,7 +6,7 @@ export class DataNode {
   token: Token
   source: string
   key: number
-  period: number
+  period: 'CURRENT' | 'YTD' | 'PREVIOUS' | 'LFY'
 
   constructor(token: Token) {
     this.token = token
