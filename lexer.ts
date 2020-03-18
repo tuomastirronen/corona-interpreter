@@ -1,7 +1,7 @@
 import { Token, TokenType } from './token'
 
 const DIGITS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
-const VARIABLES = ['a', 'i', 'b']
+const LETTERS = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y']
 
 export class Lexer {
   formula: string
@@ -25,9 +25,9 @@ export class Lexer {
     while (this.currentChar != null) {
       if (this.currentChar == ' ') {
         this.next()
-      } else if ([...DIGITS].indexOf(this.currentChar) > -1) {
+      } else if (DIGITS.indexOf(this.currentChar) > -1) {
         tokens.push(this.constant())
-      } else if ([...VARIABLES].indexOf(this.currentChar) > -1) {
+      } else if (LETTERS.indexOf(this.currentChar) > -1) {
         tokens.push(this.variable())
       } else if (this.currentChar == '+') {
         tokens.push(new Token(TokenType.PLUS))
@@ -55,23 +55,13 @@ export class Lexer {
   }
 
   variable(): Token {
-    let name = ''
-    let value = ''
-    let colonCount = 0
+    let str = ''
 
-    while (this.currentChar != null && [...VARIABLES, ...DIGITS, ':'].indexOf(this.currentChar) > -1) {
-      if (colonCount > 0) {
-        value += this.currentChar
-      } else {
-        if (this.currentChar == ':') {
-          colonCount += 1
-        } else {
-          name += this.currentChar
-        }
-      }
+    while (this.currentChar != null && [...LETTERS, ...DIGITS, ',', '_', '[', ']', ' '].indexOf(this.currentChar) > -1) {
+      str += this.currentChar
       this.next()
     }
-    return new Token(TokenType.VAR, value, name)
+    return new Token(TokenType.DATA, str)
   }
 
   constant(): Token {

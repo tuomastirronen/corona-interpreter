@@ -1,5 +1,5 @@
 export enum TokenType {
-  VAR = 'VAR',
+  DATA = 'DATA',
   CONST = 'CONST',
   PLUS = 'PLUS',
   MINUS = 'MINUS',
@@ -12,11 +12,9 @@ export enum TokenType {
 export class Token {
   type: TokenType
   value: any
-  name: string
 
-  constructor(type: TokenType, value?: any, name?: string) {
+  constructor(type: TokenType, value?: any) {
     this.type = type
     this.value = value
-    this.name = name
   }
 }

@@ -1,12 +1,12 @@
 export const data = {
-  a: {
+  ACCOUNT: {
     3999: 420
   },
-  i: {
+  INCOME_STATEMENT: {
     5: 666,
     11: 200
   },
-  b: {
+  BALANCE_SHEET: {
     59: 30000
   }
 }

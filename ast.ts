@@ -1,12 +1,20 @@
 import { Token } from './token';
 
-export declare type Node = VariableNode | ConstantNode | BinOpNode | UnaryOpNode
+export declare type Node = DataNode | ConstantNode | BinOpNode | UnaryOpNode
 
-export class VariableNode {
+export class DataNode {
   token: Token
+  source: string
+  key: number
+  period: number
 
   constructor(token: Token) {
     this.token = token
+    this.source = token.value.split('[')[0]
+    let params = token.value.match(/(?<=\[)(.*?)(?=\])/)[0]
+
+    this.key = +params.split(',')[0]
+    this.period = params.split(',')[1].trim()
   }
 }
 

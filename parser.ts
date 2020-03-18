@@ -1,5 +1,5 @@
 import { Token, TokenType } from './token';
-import { Node, BinOpNode, ConstantNode, UnaryOpNode, VariableNode } from './ast';
+import { Node, BinOpNode, ConstantNode, UnaryOpNode, DataNode } from './ast';
 
 export class Parser {
   tokens: Token[]
@@ -30,9 +30,9 @@ export class Parser {
       this.next()
       let factor = this.factor()
       return new UnaryOpNode(token, factor)
-    } else if ([TokenType.VAR].indexOf(token.type) > -1) {
+    } else if ([TokenType.DATA].indexOf(token.type) > -1) {
       this.next()
-      return new VariableNode(token)
+      return new DataNode(token)
     } else if ([TokenType.CONST].indexOf(token.type) > -1) {
       this.next()
       return new ConstantNode(token)
@@ -46,7 +46,7 @@ export class Parser {
         throw new Error(`Syntax error. Expected ${TokenType.RPAREN}, got ${this.currentToken.type}`)
       }
     } else {
-      throw new Error(`Syntax error. Expected ${[TokenType.PLUS, TokenType.MINUS, TokenType.VAR, TokenType.CONST, TokenType.LPAREN]}, got ${this.currentToken.type}`)
+      throw new Error(`Syntax error. Expected ${[TokenType.PLUS, TokenType.MINUS, TokenType.DATA, TokenType.CONST, TokenType.LPAREN]}, got ${this.currentToken.type}`)
     }
   }
 

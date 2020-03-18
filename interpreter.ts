@@ -1,4 +1,4 @@
-import { Node, VariableNode, ConstantNode, BinOpNode, UnaryOpNode } from './ast'
+import { Node, ConstantNode, BinOpNode, UnaryOpNode, DataNode } from './ast'
 import { data } from './data'
 import { TokenType } from './token'
 
@@ -14,8 +14,8 @@ export class Interpreter {
   }
 
   eval(node: Node) {
-    if (node instanceof VariableNode) {
-      return data[node.token.name][node.token.value]
+    if (node instanceof DataNode) {
+      return data[node.source][node.key]
     } else if (node instanceof ConstantNode) {
       return node.token.value
     } else if (node instanceof BinOpNode) {
