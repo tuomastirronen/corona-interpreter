@@ -55,9 +55,23 @@ export class Lexer {
   }
 
   variable(): Token {
-    let str = this.currentChar
-    this.next()
-    return new Token(TokenType.VAR, str)
+    let name = ''
+    let value = ''
+    let colonCount = 0
+
+    while (this.currentChar != null && [...VARIABLES, ...DIGITS, ':'].indexOf(this.currentChar) > -1) {
+      if (colonCount > 0) {
+        value += this.currentChar
+      } else {
+        if (this.currentChar == ':') {
+          colonCount += 1
+        } else {
+          name += this.currentChar
+        }
+      }
+      this.next()
+    }
+    return new Token(TokenType.VAR, value, name)
   }
 
   constant(): Token {

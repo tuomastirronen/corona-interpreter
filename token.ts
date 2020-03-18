@@ -12,9 +12,11 @@ export enum TokenType {
 export class Token {
   type: TokenType
   value: any
+  name: string
 
-  constructor(type: TokenType, value?: any) {
+  constructor(type: TokenType, value?: any, name?: string) {
     this.type = type
     this.value = value
+    this.name = name
   }
 }

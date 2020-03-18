@@ -43,10 +43,10 @@ export class Parser {
         this.next()
         return expr
       } else {
-        throw new Error(`Syntax error`)
+        throw new Error(`Syntax error. Expected ${TokenType.RPAREN}, got ${this.currentToken.type}`)
       }
     } else {
-      throw new Error(`Syntax error`)
+      throw new Error(`Syntax error. Expected ${[TokenType.PLUS, TokenType.MINUS, TokenType.VAR, TokenType.CONST, TokenType.LPAREN]}, got ${this.currentToken.type}`)
     }
   }
 
