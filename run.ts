@@ -11,8 +11,10 @@ let parser = new Parser(tokens)
 let ast = parser.parse()
 
 let fiscalYear = { id: 1, startDate: new Date('2020-01-01'), endDate: new Date('2020-12-31') }
+let year
+let month
 
-let interpreter = new Interpreter(ast, fiscalYear)
+let interpreter = new Interpreter(ast, fiscalYear, year, month)
 let result = interpreter.interpret()
 
 console.log(result)
