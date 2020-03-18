@@ -28,7 +28,7 @@ export class Lexer {
       } else if (DIGITS.indexOf(this.currentChar) > -1) {
         tokens.push(this.constant())
       } else if (LETTERS.indexOf(this.currentChar) > -1) {
-        tokens.push(this.variable())
+        tokens.push(this.data())
       } else if (this.currentChar == '+') {
         tokens.push(new Token(TokenType.PLUS))
         this.next()
@@ -54,7 +54,7 @@ export class Lexer {
     return tokens
   }
 
-  variable(): Token {
+  data(): Token {
     let str = ''
 
     while (this.currentChar != null && [...LETTERS, ...DIGITS, ',', '_', '[', ']', ' '].indexOf(this.currentChar) > -1) {
