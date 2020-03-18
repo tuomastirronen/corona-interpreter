@@ -2,7 +2,7 @@ import { Lexer } from './lexer'
 import { Parser } from './parser'
 import { Interpreter } from './interpreter'
 
-let formula = '(ACCOUNT[3999, CURRENT] - ACCOUNT[3999, PREVIOUS]) / ACCOUNT[3999, PREVIOUS]'
+let formula = '(A[3999, CURRENT] - A[3999, PREVIOUS]) / A[3999, PREVIOUS]'
 
 let lexer = new Lexer(formula)
 let tokens = lexer.tokenize()

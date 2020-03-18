@@ -1,11 +1,11 @@
 export const data = {
-  ACCOUNT: {
+  A: {
     3999: {
       PREVIOUS: 1000,
       CURRENT: 1200
     }
   },
-  INCOME_STATEMENT: {
+  B: {
     5: {
       PREVIOUS: 1500,
       CURRENT: 2000
@@ -15,7 +15,7 @@ export const data = {
       CURRENT: 200
     }
   },
-  BALANCE_SHEET: {
+  C: {
     59: {
       PREVIOUS: 10000,
       CURRENT: 12000
