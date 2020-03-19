@@ -1,5 +1,5 @@
 import { Token, TokenType } from './token';
-import { Node, BinOpNode, ConstantNode, UnaryOpNode, DataNode } from './ast';
+import { Node, BinOpNode, ConstantNode, UnaryOpNode, FunctionNode } from './ast';
 
 export class Parser {
   tokens: Token[]
@@ -30,12 +30,11 @@ export class Parser {
       this.next()
       let factor = this.factor()
       return new UnaryOpNode(token, factor)
-    } else if ([TokenType.DATA].indexOf(token.type) > -1) {
-      this.next()
-      return new DataNode(token)
     } else if ([TokenType.CONST].indexOf(token.type) > -1) {
       this.next()
       return new ConstantNode(token)
+    } else if ([TokenType.FUNC].indexOf(token.type) > -1) {
+      return this.func(token)
     } else if (token.type == TokenType.LPAREN) {
       this.next()
       let expr = this.expr()
@@ -46,14 +45,14 @@ export class Parser {
         throw new Error(`Syntax error. Expected ${TokenType.RPAREN}, got ${this.currentToken.type}`)
       }
     } else {
-      throw new Error(`Syntax error. Expected ${[TokenType.PLUS, TokenType.MINUS, TokenType.DATA, TokenType.CONST, TokenType.LPAREN]}, got ${this.currentToken.type}`)
+      throw new Error(`Syntax error. Expected ${[TokenType.PLUS, TokenType.MINUS, TokenType.FUNC, TokenType.CONST, TokenType.LPAREN]}, got ${this.currentToken.type}`)
     }
   }
 
   term(): Node {
     let left = this.factor()
 
-    while ([TokenType.MUL, TokenType.DIV].indexOf(this.currentToken.type) > -1) {
+    while ([TokenType.MUL, TokenType.DIV, TokenType.LT, TokenType.GT, TokenType.EQ].indexOf(this.currentToken.type) > -1) {
       let opToken = this.currentToken
       this.next()
       let right = this.factor()
@@ -74,5 +73,22 @@ export class Parser {
     }
 
     return left
+  }
+
+  func(functionToken: Token): Node {
+    this.next()
+    let parameters = this.parameters()
+    return new FunctionNode(functionToken, parameters)
+  }
+
+  parameters(): ConstantNode[] {
+    let parameters = []
+    this.next()
+
+    while ([TokenType.CONST, TokenType.FUNC, TokenType.LPAREN].indexOf(this.currentToken.type) > -1) {
+      parameters.push(this.expr())
+      this.next()
+    }
+    return parameters
   }
 }

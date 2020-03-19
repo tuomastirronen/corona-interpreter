@@ -1,4 +1,4 @@
-import { Node, ConstantNode, BinOpNode, UnaryOpNode, DataNode } from './ast'
+import { Node, ConstantNode, BinOpNode, UnaryOpNode, FunctionNode } from './ast'
 import { data } from './data'
 import { TokenType } from './token'
 
@@ -20,8 +20,8 @@ export class Interpreter {
   }
 
   eval(node: Node) {
-    if (node instanceof DataNode) {
-      return data[node.source][node.key][node.period]
+    if (node instanceof FunctionNode) {
+      return this.call(node)
     } else if (node instanceof ConstantNode) {
       return node.token.value
     } else if (node instanceof BinOpNode) {
@@ -34,6 +34,12 @@ export class Interpreter {
           return this.eval(node.left) * this.eval(node.right)
         case TokenType.DIV:
           return this.eval(node.left) / this.eval(node.right)
+        case TokenType.LT:
+          return this.eval(node.left) < this.eval(node.right)
+        case TokenType.GT:
+          return this.eval(node.left) > this.eval(node.right)
+        case TokenType.EQ:
+          return this.eval(node.left) == this.eval(node.right)
         default:
           throw new Error('Runtime error')
       }
@@ -47,5 +53,41 @@ export class Interpreter {
           throw new Error('Runtime error')
       }
     }
+  }
+
+  call(node: FunctionNode) {
+    switch (node.token.value) {
+      case 'IF':
+        return this.if(node)
+      case 'AVG':
+        return this.avg(node)
+      case 'LOOKUP':
+        return this.lookup(node)
+      default:
+        return 0
+    }
+  }
+
+  if(node: FunctionNode) {
+    let expression = this.eval(node.parameters[0])
+    if (expression) {
+      return this.eval(node.parameters[1])
+    }
+    return this.eval(node.parameters[2])
+  }
+
+  avg(node: FunctionNode) {
+    let sum = 0
+    for (let parameter of node.parameters) {
+      sum += this.eval(parameter)
+    }
+    return sum / node.parameters.length
+  }
+
+  lookup(node: FunctionNode) {
+    let source = this.eval(node.parameters[0])
+    let key = this.eval(node.parameters[1])
+    let period = this.eval(node.parameters[2])
+    return data[source][key][period]
   }
 }

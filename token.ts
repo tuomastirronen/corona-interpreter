@@ -1,12 +1,16 @@
 export enum TokenType {
-  DATA = 'DATA',
   CONST = 'CONST',
+  FUNC = 'FUNC',
   PLUS = 'PLUS',
   MINUS = 'MINUS',
   MUL = 'MUL',
   DIV = 'DIV',
   LPAREN = 'LPAREN',
-  RPAREN = 'RPAREN'
+  RPAREN = 'RPAREN',
+  COMMA = 'COMMA',
+  EQ = 'EQ',
+  LT = 'LT',
+  GT = 'GT',
 }
 
 export class Token {
