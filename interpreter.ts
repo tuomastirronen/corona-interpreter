@@ -4,15 +4,9 @@ import { TokenType } from './token'
 
 export class Interpreter {
   ast: Node
-  fiscalYear: any
-  year: number
-  month: number
 
-  constructor(ast: Node, fiscalYear: any, year?: number, month?: number) {
+  constructor(ast: Node) {
     this.ast = ast
-    this.fiscalYear = fiscalYear
-    this.year = year
-    this.month = month
   }
 
   interpret() {
@@ -34,6 +28,10 @@ export class Interpreter {
           return this.eval(node.left) * this.eval(node.right)
         case TokenType.DIV:
           return this.eval(node.left) / this.eval(node.right)
+        case TokenType.AND:
+          return this.eval(node.left) && this.eval(node.right)
+        case TokenType.OR:
+          return this.eval(node.left) || this.eval(node.right)
         case TokenType.LT:
           return this.eval(node.left) < this.eval(node.right)
         case TokenType.GT:

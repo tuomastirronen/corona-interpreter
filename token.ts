@@ -5,6 +5,8 @@ export enum TokenType {
   MINUS = 'MINUS',
   MUL = 'MUL',
   DIV = 'DIV',
+  AND = 'AND',
+  OR = 'OR',
   LPAREN = 'LPAREN',
   RPAREN = 'RPAREN',
   COMMA = 'COMMA',

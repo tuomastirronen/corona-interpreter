@@ -65,7 +65,7 @@ export class Parser {
   expr(): Node {
     let left = this.term()
 
-    while ([TokenType.PLUS, TokenType.MINUS].indexOf(this.currentToken.type) > -1) {
+    while ([TokenType.PLUS, TokenType.MINUS, TokenType.AND, TokenType.OR].indexOf(this.currentToken.type) > -1) {
       let opToken = this.currentToken
       this.next()
       let right = this.term()
